@@ -1,2 +1,0 @@
-# JavaSgcm
-Tutorial

@@ -1,3 +1,5 @@
+package br.ufac.sgcm.model;
+
 import java.io.Serializable;
 
 public class Especialidade implements Serializable{

@@ -1,37 +1,38 @@
+package br.ufac.sgcm.model;
+
 import java.io.Serializable;
 
 public class Unidade implements Serializable{
-
-    private long id;
-    private string nome;
-    private string endereço;
+    private Long id;
+    private String nome;
+    private String endereco;
 
     public Unidade(){
 
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public string getNome() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNome(string nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public string getEndereço() {
-        return endereço;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEndereço(string endereço) {
-        this.endereço = endereço;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
-    
+
 }

@@ -1,32 +1,32 @@
 package sgcm.src.main;
-
-import sgcm.src.main.java.br.ufac.sgcm.model.Especialidade;
-import sgcm.src.main.java.br.ufac.sgcm.model.Profissional;
-import sgcm.src.main.java.br.ufac.sgcm.model.Unidade;
+import br.ufac.sgcm.model.Especialidade;
+import br.ufac.sgcm.model.Profissional;
+import br.ufac.sgcm.model.Unidade;
 
 public class App {
-    public static void main(String[] args){
-        profissional p1 = new profisional();
-        p1.setId(id:1L);
-        p1.setNome(nome:"Limeira");
-        p1.setEmal(email:"limeira@ufac.br");
-        p1.setTelefone(telefone:"99999999");
-        p1.setRegistro(registro:"crm-123");
+    public static void main(String [] args){
+        br.ufac.sgcm.model.Profissional p1 = new Profissional();
+        p1.setId(1L);;
+        p1.setNome("nome do profissional");
+        p1.setEmail("email");
+        p1.setTelefone("9999999");
+        p1.setRegistro("Registro");
 
-        Unidade ul = new Unidade();
-        ulsetId(id:1l);
-        ul.setNome(nome:"Pronto Atendimeto");
-        ul.setEndereço(endereco:"Av. Rocha  viana");
+        Unidade u1 = new Unidade();
+        u1.setId(1L);
+        u1.setNome("Nome da unidade");
+        u1.setEndereco("Endereco da unidade");
 
-        Especialidade el = new Especialidade();
-        el.setId(id:1L);
-        el.setNome(nome:"Pediatra");
+        br.ufac.sgcm.model.Especialidade e1 = new Especialidade();
+        e1.setId(1L);
+        e1.setNome("Nome da especialidade");
 
-        p1.setUnidade(ul);
-        p1.setEspecialidade(el);
+        p1.setUnidade(u1);
+        p1.setEspecialidade(e1);
 
-        System.out.println(p1.getNome);
+        System.out.println(p1.getNome());
         System.out.println(p1.getUnidade().getNome());
-        System.out.println(p1.getEspecialidade().p1.getNome());
+        System.out.println(p1.getEspecialidade().getNome());
     }
+
 }
