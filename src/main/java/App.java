@@ -1,7 +1,9 @@
 
 import java.sql.Connection;
+import java.util.List;
 
 import br.ufac.sgcm.dao.ConexaoBD;
+import br.ufac.sgcm.dao.EspecialidadeDao;
 import br.ufac.sgcm.model.Especialidade;
 import br.ufac.sgcm.model.Profissional;
 import br.ufac.sgcm.model.Unidade;
@@ -38,6 +40,11 @@ public class App {
             System.out.println("conectou");
         }else {
             System.out.println("falhou");
+        }
+        EspecialidadeDao eDao = new EspecialidadeDao();
+        List<Especialidade> listEspecialidade = eDao.get();
+        for (Especialidade item : listEspecialidade){
+            System.out.println(item.getId() + "|" +item.getNome());
         }
     }
 }
