@@ -1,8 +1,8 @@
+package br.ufac.sgcm.dao;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import com.mysql.cj.jdbc.ConnectionGroup;
 
 public class ConexaoBD {
     private String url = "jdbc:mysql://localhost/sgcm";
@@ -12,8 +12,8 @@ public class ConexaoBD {
     public Connection getConexao(){
     try{
     
-    Class.forName("com.mysql.cj.jdbc.Drive");
-    con = DriverManager.getConnection(url, usuario, senha)
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    con = DriverManager.getConnection(url, usuario, senha);
     }catch(ClassNotFoundException | SQLException e){
         e.printStackTrace();
     }

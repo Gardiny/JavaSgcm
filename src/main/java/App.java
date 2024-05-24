@@ -1,11 +1,14 @@
-package sgcm.src.main;
+
+import java.sql.Connection;
+
+import br.ufac.sgcm.dao.ConexaoBD;
 import br.ufac.sgcm.model.Especialidade;
 import br.ufac.sgcm.model.Profissional;
 import br.ufac.sgcm.model.Unidade;
 
 public class App {
     public static void main(String [] args){
-        br.ufac.sgcm.model.Profissional p1 = new Profissional();
+        Profissional p1 = new Profissional();
         p1.setId(1L);;
         p1.setNome("nome do profissional");
         p1.setEmail("email");
@@ -17,7 +20,7 @@ public class App {
         u1.setNome("Nome da unidade");
         u1.setEndereco("Endereco da unidade");
 
-        br.ufac.sgcm.model.Especialidade e1 = new Especialidade();
+        Especialidade e1 = new Especialidade();
         e1.setId(1L);
         e1.setNome("Nome da especialidade");
 
@@ -27,6 +30,14 @@ public class App {
         System.out.println(p1.getNome());
         System.out.println(p1.getUnidade().getNome());
         System.out.println(p1.getEspecialidade().getNome());
-    }
 
+        ConexaoBD conexao = new ConexaoBD();
+        conexao.getConexao();
+        Connection instancia = conexao.getConexao();
+        if(instancia != null) {
+            System.out.println("conectou");
+        }else {
+            System.out.println("falhou");
+        }
+    }
 }
