@@ -1,3 +1,4 @@
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -8,11 +9,14 @@ public class ConexaoBD {
     private String usuario = "root";
     private String senha = "root";
     Connection con;
+    public Connection getConexao(){
     try{
     
     Class.forName("com.mysql.cj.jdbc.Drive");
     con = DriverManager.getConnection(url, usuario, senha)
-    }catch(SQLException e){
+    }catch(ClassNotFoundException | SQLException e){
         e.printStackTrace();
+    }
+    return con;
     }
 }
