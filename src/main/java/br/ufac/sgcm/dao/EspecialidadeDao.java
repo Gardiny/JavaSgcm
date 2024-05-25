@@ -35,7 +35,22 @@ public class EspecialidadeDao {
         }
         return registros;
     }
-    // retornar um objeto do tipo especialidade
-    //
+    //Retornar um ojeto do tipo especialidade
+    public Especialidade get(Long id){
+        Especialidade registro = new Especialidade();
+        String sql = "SELECT * FROM especialidade WHERE id = ?";
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setLong(1, id);
+            rs=ps.executeQuery();
+            if (rs.next()) {
+                registro.setId(rs.getLong("id"));
+                registro.setNome(rs.getString("nome"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return registro;
+    }
     
 }

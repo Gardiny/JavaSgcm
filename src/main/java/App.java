@@ -1,5 +1,7 @@
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufac.sgcm.dao.ConexaoBD;
@@ -43,8 +45,49 @@ public class App {
         }
         EspecialidadeDao eDao = new EspecialidadeDao();
         List<Especialidade> listEspecialidade = eDao.get();
+        System.out.println("Lista de Especialidade");
         for (Especialidade item : listEspecialidade){
             System.out.println(item.getId() + "|" +item.getNome());
         }
+        System.out.println("Uma Especialidade");
+        Especialidade esp = eDao.get(2L);
+        System.out.println(esp.getId() + "|" +esp.getNome());
+        System.out.println("Lista com termo de busca:gia");
+        
+        List<Especialidade> listaBusca = eDao.get("gia");
+        for (Especialidade item : listaBusca){
+            System.out.println(item.getId() + "|" +item.getNome())
+        }
+    }
+    //retorne conforme um termo de busca
+    public List<Especialidade> get(String termoBusca){
+        List<Especialidade> registros = new ArrayList<>();
+        String sql = "SELECT * FROM especialidade WHERE nome LIKE ?";
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, "%" +termoBusca+ "%" );
+            rs = ps.executeQuery();
+            while (rs.netx()) {
+                Especialidade registro = new Especialidade();
+                registro.setId(rs.getLong("id"));
+                registro.setNome(rs.getString("nome"));
+                registros.add(registro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return registros;
+    }
+    // inserir uma especialidade
+    public void insert(Especialidade objeto){
+        String sql = "INSERT INTO especialidade nome VALUES ?";
+        try{
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, objeto.getNome());
+            registroAfetados = ps.executeUpdate();
+        }catch{SQLException e}{
+            e.printStackTrace();
+        }
+        return registroAfetados;
     }
 }
