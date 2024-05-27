@@ -9,13 +9,13 @@ import java.util.List;
 
 import br.ufac.sgcm.model.Unidade;
 
-public class UnidadeDao {
+public class UnidadeDao implements IDao<Unidade>{
     Connection conexao;
     PreparedStatement ps;
     ResultSet rs;
     
     public UnidadeDao() {
-        conexao = new ConexaoDB().getConexao();
+        conexao = ConexaoDB.getConexao();
     }
     
     // Retorna todos os objetos do tipo unidade
@@ -39,6 +39,7 @@ public class UnidadeDao {
     }
 
     // Retorna um objeto de tipo unidade pelo id
+    @Override
     public Unidade get(Long id) {
         Unidade registro = new Unidade();
         String sql = "SELECT * FROM unidade WHERE id = ?";
@@ -58,6 +59,7 @@ public class UnidadeDao {
     }
 
     // Retorna conforme termo de busca
+    @Override
     public List<Unidade> get(String termoDeBusca) {
         List<Unidade> registros = new ArrayList<>();
         String sql = "SELECT * FROM unidade WHERE nome LIKE ?";
@@ -109,16 +111,42 @@ public class UnidadeDao {
     }
 
     // Excluir uma Unidade
-    public int delete(Unidade obejeto) {
-        String sql = "DELETE FROM unidade WHERE id = ?";
+    // public int delete(Unidade obejeto) {
+    //     String sql = "DELETE FROM unidade WHERE id = ?";
+    //     int registrosAfetados = 0;
+    //     try {
+    //         ps = conexao.prepareStatement(sql);
+    //         ps.setLong(1, obejeto.getId());
+    //         registrosAfetados = ps.executeUpdate();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return registrosAfetados;
+    // }
+
+    @Override
+    public int delete(Object objeto) {
         int registrosAfetados = 0;
+        String sql = "DELETE FROM unidade WHERE id = ?";
         try {
             ps = conexao.prepareStatement(sql);
-            ps.setLong(1, obejeto.getId());
+            ps.setLong(1, objeto.getId());
             registrosAfetados = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return registrosAfetados;
+    }
+
+    @Override
+    public int insert(Object objeto) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int update(Object objeto) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

@@ -14,7 +14,7 @@ public class EspecialidadeDao {
     PreparedStatement ps;
     ResultSet rs;
     public EspecialidadeDao() {
-        conexao = new ConexaoDB().getConexao();
+        conexao = ConexaoDB.getConexao();
     }
 
     /// Retornar todos os objetos do tipo Especialidade

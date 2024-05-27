@@ -19,7 +19,7 @@ public class App {
         Unidade u1 = new Unidade();
         u1.setId(13L);
         u1.setNome("UTI");
-        u1.setEndereco("Av. Rocha Viana- 204");
+        u1.setEndereco("Av. nao sei onde fica");
 
         Especialidade e1 = new Especialidade();
         e1.setId(6L);
