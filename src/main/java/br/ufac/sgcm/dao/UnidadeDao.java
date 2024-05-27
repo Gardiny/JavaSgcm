@@ -7,39 +7,41 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufac.sgcm.model.Especialidade;
+import br.ufac.sgcm.model.Unidade;
 
-public class EspecialidadeDao {
+public class UnidadeDao {
     Connection conexao;
     PreparedStatement ps;
     ResultSet rs;
-    public EspecialidadeDao() {
+    
+    public UnidadeDao() {
         conexao = new ConexaoDB().getConexao();
     }
-
-    /// Retornar todos os objetos do tipo Especialidade
-    public List<Especialidade> get() {
-        List<Especialidade> registros = new ArrayList<>();
-        String sql = "SELECT * FROM especialidade";
+    
+    // Retorna todos os objetos do tipo unidade
+    public List<Unidade> get() {
+        List<Unidade> registros = new ArrayList<>();
+        String sql = "SELECT * FROM unidade";
         try {
             ps = conexao.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Especialidade registro = new Especialidade();
+                Unidade registro = new Unidade();
                 registro.setId(rs.getLong("id"));
+                registro.setEndereco(rs.getString("endereco"));
                 registro.setNome(rs.getString("nome"));
                 registros.add(registro);
             }
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return registros;
     }
 
-    // Retornar um objetos do tipo Especialidade pelo id
-    public Especialidade get(Long id) {
-        Especialidade registro = new Especialidade();
-        String sql = "SELECT * FROM especialidade WHERE id = ?";
+    // Retorna um objeto de tipo unidade pelo id
+    public Unidade get(Long id) {
+        Unidade registro = new Unidade();
+        String sql = "SELECT * FROM unidade WHERE id = ?";
         try {
             ps = conexao.prepareStatement(sql);
             ps.setLong(1, id);
@@ -47,6 +49,7 @@ public class EspecialidadeDao {
             if(rs.next()) {
                 registro.setId(rs.getLong("id"));
                 registro.setNome(rs.getString("nome"));
+                registro.setEndereco(rs.getString("endereco"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,33 +57,34 @@ public class EspecialidadeDao {
         return registro;
     }
 
-    // Retornar as Especialidades conforme o termo de busca
-    public List<Especialidade> get(String termoBusca) {
-        List<Especialidade> registros = new ArrayList<>();
-        String sql = "SELECT * FROM especialidade WHERE nome LIKE ?";
+    // Retorna conforme termo de busca
+    public List<Unidade> get(String termoDeBusca) {
+        List<Unidade> registros = new ArrayList<>();
+        String sql = "SELECT * FROM unidade WHERE nome LIKE ?";
         try {
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, "%" + termoBusca + "%");
+            ps.setString(1, "%" + termoDeBusca + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                Especialidade registro = new Especialidade();
+                Unidade registro = new Unidade();
                 registro.setId(rs.getLong("id"));
                 registro.setNome(rs.getString("nome"));
-                registros.add(registro);
+                registro.setEndereco(rs.getString("enderco"));
             }
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return registros;
     }
 
-    // Inserir uma Especialidade
-    public int insert(Especialidade objeto) {
+    // Insere uma nova Unidade
+    public int insert(Unidade objeto) {
         int registrosAfetados = 0;
-        String sql = "INSERT INTO especialidade (nome) VALUES (?)";
+        String sql = "INSERT INTO unidade (endereco, nome) VALUES (?, ?)";
         try {
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, objeto.getNome());
+            ps.setString(1, objeto.getEndereco());
+            ps.setString(2, objeto.getNome());
             registrosAfetados = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,31 +92,30 @@ public class EspecialidadeDao {
         return registrosAfetados;
     }
 
-    // Atualizar uma Especialidade
-    public int update(Especialidade obejeto) {
-        String sql = "UPDATE especialidade SET nome = ? WHERE id = ?";
+    // Atualizar Unidade
+    public int update(Unidade objeto) {
+        String sql = "UPDATE unidade SET endereco = ?, nome = ? WHERE id = ?";
         int registrosAfetados = 0;
         try {
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, obejeto.getNome());
-            ps.setLong(2, obejeto.getId());
-            ps.executeUpdate();
-            
+            ps.setString(1, objeto.getEndereco());
+            ps.setString(2, objeto.getNome());
+            ps.setLong(3, objeto.getId());
+            registrosAfetados = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return registrosAfetados;
     }
 
-    // Excluir uma Especialidade
-    public int delete(Especialidade objeto) {
-        String sql = "DELETE FROM especialidade WHERE id = ?";
+    // Excluir uma Unidade
+    public int delete(Unidade obejeto) {
+        String sql = "DELETE FROM unidade WHERE id = ?";
         int registrosAfetados = 0;
         try {
             ps = conexao.prepareStatement(sql);
-            ps.setLong(1, objeto.getId());
+            ps.setLong(1, obejeto.getId());
             registrosAfetados = ps.executeUpdate();
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }

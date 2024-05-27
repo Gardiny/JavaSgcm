@@ -2,11 +2,11 @@ package br.ufac.sgcm.model;
 
 import java.io.Serializable;
 
-public class Especialidade implements Serializable{
+public class Especialidade implements Serializable {
     private Long id;
     private String nome;
 
-    public Especialidade(){
+    public Especialidade() {
 
     }
 
@@ -25,5 +25,6 @@ public class Especialidade implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     
 }

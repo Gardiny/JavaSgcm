@@ -1,41 +1,38 @@
-
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import br.ufac.sgcm.dao.ConexaoBD;
-import br.ufac.sgcm.dao.EspecialidadeDao;
+import br.ufac.sgcm.dao.ConexaoDB;
+import br.ufac.sgcm.dao.ProfissionalDao;
 import br.ufac.sgcm.model.Especialidade;
 import br.ufac.sgcm.model.Profissional;
 import br.ufac.sgcm.model.Unidade;
 
 public class App {
-    public static void main(String [] args){
+    public static void main(String[] args) {
         Profissional p1 = new Profissional();
-        p1.setId(1L);;
-        p1.setNome("nome do profissional");
-        p1.setEmail("email");
-        p1.setTelefone("9999999");
-        p1.setRegistro("Registro");
+        p1.setId(6L);
+        p1.setNome("Limeira silva oliveira cunha");
+        p1.setEmail("limeira@gmail.com");
+        p1.setTelefone("(68) 99999-9999");
+        p1.setRegistro("CRM/AC-007");
 
         Unidade u1 = new Unidade();
-        u1.setId(1L);
-        u1.setNome("Nome da unidade");
-        u1.setEndereco("Endereco da unidade");
+        u1.setId(13L);
+        u1.setNome("UTI");
+        u1.setEndereco("Av. Rocha Viana- 204");
 
         Especialidade e1 = new Especialidade();
-        e1.setId(1L);
-        e1.setNome("Nome da especialidade");
+        e1.setId(6L);
+        e1.setNome("Psiquiatria");
 
         p1.setUnidade(u1);
         p1.setEspecialidade(e1);
 
-        System.out.println(p1.getNome());
-        System.out.println(p1.getUnidade().getNome());
-        System.out.println(p1.getEspecialidade().getNome());
+        //System.out.println(p1.getNome());
+        //System.out.println(p1.getUnidade().getNome());
+        //System.out.println(p1.getEspecialidade().getNome());
 
-        ConexaoBD conexao = new ConexaoBD();
+        ConexaoDB conexao = new ConexaoDB();
         conexao.getConexao();
         Connection instancia = conexao.getConexao();
         if(instancia != null) {
@@ -43,51 +40,132 @@ public class App {
         }else {
             System.out.println("falhou");
         }
-        EspecialidadeDao eDao = new EspecialidadeDao();
-        List<Especialidade> listEspecialidade = eDao.get();
-        System.out.println("Lista de Especialidade");
-        for (Especialidade item : listEspecialidade){
-            System.out.println(item.getId() + "|" +item.getNome());
-        }
-        System.out.println("Uma Especialidade");
-        Especialidade esp = eDao.get(2L);
-        System.out.println(esp.getId() + "|" +esp.getNome());
-        System.out.println("Lista com termo de busca:gia");
         
-        List<Especialidade> listaBusca = eDao.get("gia");
-        for (Especialidade item : listaBusca){
-            System.out.println(item.getId() + "|" +item.getNome())
+        /*/////////////////////////////////////////////
+        EspecialidadeDao eDao = new EspecialidadeDao();
+        List<Especialidade> listaEspecialidades = eDao.get();
+        System.out.println("\nLista de especialidades \n");
+        for (Especialidade item : listaEspecialidades) {
+            System.out.println(item.getId() + " | " + item.getNome());
         }
-    }
-    //retorne conforme um termo de busca
-    public List<Especialidade> get(String termoBusca){
-        List<Especialidade> registros = new ArrayList<>();
-        String sql = "SELECT * FROM especialidade WHERE nome LIKE ?";
-        try {
-            ps = conexao.prepareStatement(sql);
-            ps.setString(1, "%" +termoBusca+ "%" );
-            rs = ps.executeQuery();
-            while (rs.netx()) {
-                Especialidade registro = new Especialidade();
-                registro.setId(rs.getLong("id"));
-                registro.setNome(rs.getString("nome"));
-                registros.add(registro);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        System.out.println("\nUma Especialidade por id");
+        Especialidade esp = eDao.get(2L);
+        System.out.println(esp.getId() + " | " + esp.getNome());
+
+        System.out.println("\nLista de Especialidades por termo busca");
+        List<Especialidade> listaBuscaE = eDao.get("tria");
+        for (Especialidade item : listaBuscaE) {
+            System.out.println(item.getId() + " | " + item.getNome());
         }
-        return registros;
-    }
-    // inserir uma especialidade
-    public void insert(Especialidade objeto){
-        String sql = "INSERT INTO especialidade nome VALUES ?";
-        try{
-            ps = conexao.prepareStatement(sql);
-            ps.setString(1, objeto.getNome());
-            registroAfetados = ps.executeUpdate();
-        }catch{SQLException e}{
-            e.printStackTrace();
+
+        System.out.println("\nInserir Especialidade");
+        if(eDao.insert(e1) == 1) {
+            System.out.println("Especialidade inserida com sucesso");
+        }else {
+            System.out.println("Erro ao inserir especialidade");
         }
-        return registroAfetados;
+
+        eDao.update(e1);
+        System.out.println("Especialidade alterada: " + eDao.get(8L).getNome());
+
+
+        eDao.delete(e1);
+
+        /////////////////////////////////////
+        UnidadeDao uDao = new UnidadeDao();
+
+        List<Unidade> listaUnidades = uDao.get();
+        System.out.println("\nLista de Unidades");
+        for(Unidade item : listaUnidades) {
+            System.out.println(item.getId() + " | " + item.getNome() + " | " + item.getEndereco());
+        }
+
+        System.out.println("\nUma Unidade pelo id");
+        Unidade uni = uDao.get(2L);
+        System.out.println(uni.getId() + " | " + uni.getNome() + " | " + uni.getEndereco());
+        
+        System.out.println("\nLista de Unidade por termo busca");
+        List<Unidade> listaBuscaU = uDao.get("B");
+        for (Unidade item : listaBuscaU) {
+            System.out.println(item.getId() + " | " + item.getNome());
+        }
+
+        System.out.println("\nInserir Unidade");
+        if (uDao.insert(u1) == 1) {
+            System.out.println("Unidade inserida com sucesso");
+        }else {
+            System.out.println("Falha ao inserir uma Unidade");
+        }
+
+        
+        System.out.println("\nAtualizar Unidade");
+        if (uDao.update(u1) == 1) {
+            System.out.println("Unidade Atualizar com sucesso");
+        }else {
+            System.out.println("Falha ao Atualizar uma Unidade");
+        }
+
+        System.out.println("\nDelete uma unidade");
+        uDao.delete(u1);
+
+        ///////////////////////////////////////*/
+        
+        ProfissionalDao pDao = new ProfissionalDao();
+        List<Profissional> listaProfissionais = pDao.get();
+        System.out.println("\nLista de Profissionais \n");
+        for (Profissional item : listaProfissionais) {
+            System.out.println(item.getId() + " | " + 
+                                item.getNome() + " | " +
+                                item.getRegistro() + " | " +
+                                item.getEmail() + " | " +
+                                item.getTelefone() + " | " +
+                                item.getEspecialidade().getNome() + " | " +
+                                item.getUnidade().getNome());
+        }
+  
+        System.out.println("\nUm Profissional pelo Id");
+        Profissional prof = pDao.get(3L);
+        System.out.println(prof.getId() + " | " +
+                            prof.getNome() + " | " +
+                            prof.getRegistro() + " | " +
+                            prof.getEmail() + " | " +
+                            prof.getTelefone() + " | " +
+                            prof.getEspecialidade().getNome() + " | " +
+                            prof.getUnidade().getNome());
+        
+        System.out.println("\nUm Profissional pelo termo de busca");
+        String termoDeBusca = "V";
+        listaProfissionais = pDao.get(termoDeBusca);
+        for (Profissional item : listaProfissionais) {
+            System.out.println(item.getId() + " | " + 
+                                item.getNome() + " | " +
+                                item.getRegistro() + " | " +
+                                item.getEmail() + " | " +
+                                item.getTelefone() + " | " +
+                                item.getEspecialidade().getNome() + " | " +
+                                item.getUnidade().getNome());
+        }
+
+        /*System.out.println("\nInserir Profissional");
+        if(pDao.insert(p1) == 1) {
+            System.out.println("Pofissional inserido com sucesso");
+        }else {
+            System.out.println("Erro ao inserir Pofissional");
+        }
+
+        System.out.println("\nAtualizar Profissional");
+        if (pDao.update(p1) == 1) {
+            System.out.println("Profissional Atualizar com sucesso");
+        }else {
+            System.out.println("Falha ao Atualizado um Profissional");
+        }
+
+        System.out.println("\nDeletar Profissional");
+        if (pDao.delete(p1) == 1) {
+            System.out.println("Profissional Deletado com sucesso");
+        }else {
+            System.out.println("Falha ao Deletar um Profissional");
+        }*/
     }
 }
