@@ -66,6 +66,7 @@ public class UnidadeDao implements IDao<Unidade>{
         try {
             ps = conexao.prepareStatement(sql);
             ps.setString(1, "%" + termoDeBusca + "%");
+            ps.setString(2, "%" + termoDeBusca + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Unidade registro = new Unidade();
@@ -125,12 +126,12 @@ public class UnidadeDao implements IDao<Unidade>{
     // }
 
     @Override
-    public int delete(Object objeto) {
+    public int delete(Unidade obejeto) {
         int registrosAfetados = 0;
         String sql = "DELETE FROM unidade WHERE id = ?";
         try {
             ps = conexao.prepareStatement(sql);
-            ps.setLong(1, objeto.getId());
+            ps.setLong(1, obejeto.getId());
             registrosAfetados = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

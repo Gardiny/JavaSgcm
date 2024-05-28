@@ -10,15 +10,16 @@ import java.util.List;
 import br.ufac.sgcm.model.Especialidade;
 import br.ufac.sgcm.model.Profissional;
 
-public class ProfissionalDao {
+public class ProfissionalDao implements IDao<Profissional> {
     Connection conexao;
     PreparedStatement ps;
     ResultSet rs;
     public ProfissionalDao() {
-        conexao = new ConexaoDB().getConexao();
+        conexao = ConexaoDB.getConexao();
     }
 
     // Retorna todos os profissionais
+    @Override
     public List<Profissional> get() {
         List<Profissional> registros = new ArrayList<>();
         String sql = "SELECT * FROM profissional";
@@ -71,6 +72,7 @@ public class ProfissionalDao {
     }
 
     // Retorna conforme termo de busca
+    @Override
     public List<Profissional> get(String termoDeBusca) {
         List<Profissional> registros = new ArrayList<>();
         String sql = "SELECT * FROM profissional WHERE nome LIKE ?";
