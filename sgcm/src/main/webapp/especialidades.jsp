@@ -1,4 +1,12 @@
+<%@ page Encoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="br.ufac.sgcm.model.Especialidade" %>
 
+<jsp:useBean id="controller" class="br.ufac.sgcm.controller.EspecialidadeController"/>
+
+<%
+        List<Especialidade> registros = controller.processListRequest(request);
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -60,7 +68,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <% for (Especialidade item : resgistros){ %>
+                    <tr>
+                        <td><% item.getId(); %></td>
+                        <td><% item.getNome(); %></td>
+                        <td>
+                            <a class="botao" href="especialidadesForm.jsp?id=<%=item.getid();%>">Editar</a>
+                            <a class="botao excluir" href="especialidadesForm.jsp?id=<%=item.getid();%>">Excluir</a>
+                        </td>
+                    </tr>
+                    <%}%>
                 </tbody>
                 <tfoot>
                     <tr>

@@ -1,5 +1,6 @@
 package br.ufac.sgcm.controller;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,12 +70,18 @@ public class EspecialidadeController implements IController<Especialidade> {
     public Especialidade processFormRequest(HttpServletRequest req, HttpServletResponse res){
         Especialidade item = new Especialidade();
         String submit = req.getParameter("submit");
+        String paramId = req.getParameter("id");
+        if (paramId != null && paramId.isEmpty()){
+            Long id = Long.parseLong(paramId);
+            item.setId(id);
+        }
         if (submit != null){
             item.setNome(req.getParameter("nome"));
             this.save(item);
         }try{
             res.sendRedirect("especialidade.jps");
-        }catch(){
+        }catch(IOException e){
+            e.printStackTrace();
 
         }
         return item;
