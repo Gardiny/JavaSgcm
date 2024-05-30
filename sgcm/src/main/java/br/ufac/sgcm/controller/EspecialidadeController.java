@@ -79,7 +79,7 @@ public class EspecialidadeController implements IController<Especialidade> {
             item.setNome(req.getParameter("nome"));
             this.save(item);
         }try{
-            res.sendRedirect("especialidade.jps");
+            res.sendRedirect("especialidades.jps");
         }catch(IOException e){
             e.printStackTrace();
 

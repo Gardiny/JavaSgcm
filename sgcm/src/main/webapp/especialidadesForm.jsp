@@ -1,3 +1,16 @@
+<%@ page Encoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Objects" %>
+<%@ page import="br.ufac.sgcm.model.Especialidade" %>
+
+<jsp:useBean id="controller" class="br.ufac.sgcm.controller.EspecialidadeController"/>
+<jsp:useBean id="item" class="br.ufac.sgcm.model.Especialidade"/>
+
+<%
+        Especialidade item = controller.processListRequest(request, response);
+%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,7 +55,10 @@
             <form method="post">
 
                 <div class="grid">
-
+                    <input type="hidden" name="id" id="id" value="<%Objctes.toString(registro.getId())%>">
+                <label>Nome</label>
+                <input type="text" name="name" id="nome"
+                value=<%=Objects.toString(registro.getNome())%>>
                 </div>
 
                 <input type="button" value="Cancelar" data-url="especialidades.jsp">

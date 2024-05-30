@@ -67,6 +67,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
+                <!-- <--clear/ compilar / war. publique server full-->
                 <tbody>
                     <% for (Especialidade item : resgistros){ %>
                     <tr>
@@ -74,7 +75,7 @@
                         <td><% item.getNome(); %></td>
                         <td>
                             <a class="botao" href="especialidadesForm.jsp?id=<%=item.getid();%>">Editar</a>
-                            <a class="botao excluir" href="especialidadesForm.jsp?id=<%=item.getid();%>">Excluir</a>
+                            <a class="botao excluir" href="especialidades.jsp?excluir=<%=item.getid();%>">Excluir</a>
                         </td>
                     </tr>
                     <%}%>
